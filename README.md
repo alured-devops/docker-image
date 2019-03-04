@@ -16,18 +16,20 @@ $ docker run -ti --rm \
 -e FTP_PASS=YOURPASSWORD \
 -e PASV_ADDRESS=YOUR.SERVER.HOST \
 -v /YOUR/FTP/ROOT:/home/ftpuser \
-vsftpd:latest
+junhwong/vsftpd:latest
+
 ```
 
 local build:
 ```
 $ docker build -t vsftpd .
+
 ```
 
 ***NOTE***:
 Three env options is required:
 
-1. Very, very, very **important** is to set the password of the logged user, `-e FTP_PASS=YOURPASSWORD`.
+1. Very, very, very **important** is to set the password of the login user, `-e FTP_PASS=YOURPASSWORD`.
 2. `-e PASV_ADDRESS=YOUR.SERVER.HOST` sets the ftp connection address for passive mode.
 3. and map your FTP data root directory with `-v /YOUR/FTP/ROOT:/home/ftpuser`.
 
