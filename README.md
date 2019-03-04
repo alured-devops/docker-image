@@ -1,6 +1,5 @@
 ![latest 0.1.0](https://img.shields.io/badge/latest-0.1.0-green.svg?style=flat) 
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg) 
-[![Build Status](https://travis-ci.org/junhwong/vsftpd.svg?branch=master)](https://travis-ci.org/junhwong/vsftpd) 
 [![](https://img.shields.io/docker/stars/junhwong/vsftpd.svg)](https://hub.docker.com/r/junhwong/vsftpd 'DockerHub') 
 [![](https://img.shields.io/docker/pulls/junhwong/vsftpd.svg)](https://hub.docker.com/r/junhwong/vsftpd 'DockerHub')
 
