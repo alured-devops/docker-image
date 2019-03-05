@@ -7,7 +7,10 @@ ENV FTP_USER=ftpuser \
     PASV_ADDRESS=someadres.com \
     PASV_MIN=21100 \
     PASV_MAX=21109 \
-    LOOKUP_DNS=NO
+    LOOKUP_DNS=NO \
+    SSL_ENABLE=YES \
+    PASV_ENABLE=YES
+
 
 RUN apk update && apk upgrade && apk --update --no-cache add vsftpd openssl
 
@@ -27,8 +30,7 @@ RUN echo "local_enable=YES" >> /etc/vsftpd/vsftpd.conf \
     && echo "dirmessage_enable=NO" >> /etc/vsftpd/vsftpd.conf \
     && echo "background=NO" >> /etc/vsftpd/vsftpd.conf \
     && echo "seccomp_sandbox=NO" >> /etc/vsftpd/vsftpd.conf \
-    && echo "pasv_enable=YES" >> /etc/vsftpd/vsftpd.conf \
-    && echo "ssl_enable=YES" >> /etc/vsftpd/vsftpd.conf \
+    && echo "connect_from_port_20=YES" >> /etc/vsftpd/vsftpd.conf \
     && echo "ssl_tlsv1=YES" >> /etc/vsftpd/vsftpd.conf \
     && echo "ssl_sslv2=YES" >> /etc/vsftpd/vsftpd.conf \
     && echo "ssl_sslv3=YES" >> /etc/vsftpd/vsftpd.conf \

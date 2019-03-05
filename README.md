@@ -1,4 +1,4 @@
-![latest 0.1.1](https://img.shields.io/badge/latest-0.1.1-green.svg?style=flat) 
+![latest 0.1.2](https://img.shields.io/badge/latest-0.1.1-green.svg?style=flat) 
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg) 
 [![](https://img.shields.io/docker/stars/junhwong/vsftpd.svg)](https://hub.docker.com/r/junhwong/vsftpd 'DockerHub') 
 [![](https://img.shields.io/docker/pulls/junhwong/vsftpd.svg)](https://hub.docker.com/r/junhwong/vsftpd 'DockerHub')
