@@ -15,9 +15,7 @@ adduser -u $FTP_UID -D -G $FTP_USER -h /home/$FTP_USER -s /sbin/nologin $FTP_USE
 
 echo "$FTP_USER:$FTP_PASS" | /usr/sbin/chpasswd
 
-# cd /home/$FTP_USER
-# pwd
-# cat /etc/vsftpd/vsftpd.conf
+# FIXME: 日志输出到stdout失败
 
 echo "===== now start vsftpd(build:Mon Jul 8 19:17:22 CST 2019) and enjoy it:) ====="
 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf

@@ -3,7 +3,7 @@ FROM junhwong/base:alpine
 LABEL maintainer=junhwong
 # junhwong/unit:vsftpd
 ENV FTP_USER=ftpuser \
-    FTP_PASS="" \
+    FTP_PASS=$(date+%s%N) \
     FTP_UID=1433 \
     FTP_GID=1433 \
     PASV_ADDRESS=YOURSERVER.com \
@@ -23,7 +23,7 @@ COPY docker-entrypoint.sh /usr/sbin/
 
 RUN chmod +x /usr/sbin/docker-entrypoint.sh \
     && ln -sf /dev/stdout /var/log/vsftpd.log
-RUN chmod +x /var/log/vsftpd.log
+
 EXPOSE 21 21100-21109
-VOLUME /var/log/vsftpd
+
 ENTRYPOINT [ "/usr/sbin/docker-entrypoint.sh" ]
