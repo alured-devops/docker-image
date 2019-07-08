@@ -10,14 +10,14 @@ echo "ssl_enable=$SSL_ENABLE" >> /etc/vsftpd/vsftpd.conf
 echo "pasv_enable=$PASV_ENABLE" >> /etc/vsftpd/vsftpd.conf
 
 # sets login user and password
-addgroup -g 433 -S $FTP_USER
-adduser -u 431 -D -G $FTP_USER -h /home/$FTP_USER -s /sbin/nologin $FTP_USER
+addgroup -g $FTP_GID -S $FTP_USER
+adduser -u $FTP_UID -D -G $FTP_USER -h /home/$FTP_USER -s /sbin/nologin $FTP_USER
 
 echo "$FTP_USER:$FTP_PASS" | /usr/sbin/chpasswd
 
-cd /home/$FTP_USER
-pwd
+# cd /home/$FTP_USER
+# pwd
+# cat /etc/vsftpd/vsftpd.conf
 
-echo "===== now start vsftpd-v0.1.2 and enjoy it:) ====="
-
+echo "===== now start vsftpd(build:Mon Jul 8 19:17:22 CST 2019) and enjoy it:) ====="
 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
