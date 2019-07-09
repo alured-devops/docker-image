@@ -3,3 +3,5 @@
 .idea/
 .DS_Store
 test.md
+tests
+kafka/kafka_2.12-2.3.0

@@ -1,0 +1,128 @@
+################################################################
+## JVM configuration
+## JVM 配置
+## 本文件参考：
+##          https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+##          https://blog.csdn.net/varyall/article/details/80041068
+##          https://www.cnblogs.com/parryyang/p/5750146.html
+##          https://www.cnblogs.com/benwu/articles/6921047.html
+################################################################
+
+
+#---------------------------------------------------------------
+# IMPORTANT: JVM heap size
+# 重要: JVM 堆内存大小
+#---------------------------------------------------------------
+
+# Xms represents the initial size of total heap space
+# Xms 表示启动的最小堆内存
+# -Xms512M
+# Xmx represents the maximum size of total heap space
+# Xmx 表示最大可使用的堆内存大小
+# -Xmx512M
+
+#---------------------------------------------------------------
+# Expert settings
+# 专家设置
+#---------------------------------------------------------------
+#
+# All settings below this section are considered
+# expert settings. Don't tamper with them unless
+# you understand what you are doing
+#
+# 以下设置除非你知道你要什么和设置的是什么，否则不要随便修改
+#---------------------------------------------------------------
+
+## GC configuration GC 配置
+
+# 这两个设置一般配合使用, 用于『降低CMS GC频率或者增加频率、减少GC时长』的需求
+-XX:CMSInitiatingOccupancyFraction=75
+-XX:+UseCMSInitiatingOccupancyOnly
+
+## JDK 8 GC logging
+# 设置年老代为并发收集
+8:-XX:+UseConcMarkSweepGC
+8:-XX:+PrintGCDetails
+8:-XX:+PrintGCDateStamps
+8:-XX:+PrintTenuringDistribution
+8:-XX:+PrintGCApplicationStoppedTime
+8:-Xloggc:logs/gc.log
+8:-XX:+UseGCLogFileRotation
+8:-XX:NumberOfGCLogFiles=32
+8:-XX:GCLogFileSize=64m
+
+## JDK 9+ GC logging
+9-:-Xlog:gc*,gc+age=trace,safepoint:file=/tmp/gc-log.log:utctime,pid,tags:filecount=32,filesize=64m
+
+## G1GC Configuration G1GC 配置
+# NOTE: G1GC is only supported on JDK version 10 or later.
+# To use G1GC uncomment the lines below.
+# 提示: G1GC只有 JDK10或以上支持
+# 要使用 G1GC 去掉下面的注释符号
+# 10-:-XX:-UseConcMarkSweepGC
+# 10-:-XX:-UseCMSInitiatingOccupancyOnly
+# 10-:-XX:+UseG1GC
+# 10-:-XX:InitiatingHeapOccupancyPercent=75
+
+## optimizations 优化
+# explicitly set the stack size
+-Xss1m
+# pre-touch memory pages used by the JVM during initialization
+# 
+-XX:+AlwaysPreTouch
+# turn off a JDK optimization that throws away stack traces for common
+# exceptions because stack traces are important for debugging
+-XX:-OmitStackTraceInFastThrow
+
+## basic 基本选项
+# set to headless, just in case
+-Djava.awt.headless=true
+
+# ensure UTF-8 encoding by default (e.g. filenames)
+-Dfile.encoding=UTF-8
+
+# use our provided JNA always versus the system one
+-Djna.nosys=true
+
+# 临时目录
+-Djava.io.tmpdir=${ENV_TMPDIR}
+
+## heap dumps
+# generate a heap dump when an allocation from the Java heap fails
+# heap dumps are created in the working directory of the JVM
+-XX:+HeapDumpOnOutOfMemoryError
+
+# specify an alternative path for heap dumps; ensure the directory exists and
+# has sufficient space
+-XX:HeapDumpPath=data
+
+# specify an alternative path for JVM fatal error logs
+-XX:ErrorFile=logs/hs_err_pid%p.log
+
+#---------------------------------------------------------------
+# non-jvm settings
+# 非 jvm 设置，一般以 -Dxxx 开头
+# 以下是一下社区项目的摘录（可能不全），可以根据需要调整
+#---------------------------------------------------------------
+
+## Elasticsearch
+# cache ttl in seconds for positive DNS lookups noting that this overrides the
+# JDK security property networkaddress.cache.ttl; set to -1 to cache forever
+-Des.networkaddress.cache.ttl=60
+# cache ttl in seconds for negative DNS lookups noting that this overrides the
+# JDK security property networkaddress.cache.negative ttl; set to -1 to cache
+# forever
+-Des.networkaddress.cache.negative.ttl=10
+# due to internationalization enhancements in JDK 9 Elasticsearch need to set the provider to COMPAT otherwise
+# time/date parsing will break in an incompatible way for some date patterns and locals
+9-:-Djava.locale.providers=COMPAT
+-Des.path.home="$ENV_HOME"
+
+## Netty
+-Dio.netty.noUnsafe=true
+-Dio.netty.noKeySetOptimization=true
+-Dio.netty.recycler.maxCapacityPerThread=0
+
+## log4j 2
+-Dlog4j.shutdownHookEnabled=false
+-Dlog4j2.disable.jmx=true
